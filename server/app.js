@@ -28,5 +28,14 @@ app.get("/getAll", (req, res) => {
         .catch(err => console.log(err));
 })
 
+app.delete("/delete/:id", (req, res) => {
+    const { id } = req.params;
+    const db = dbService.getDBServiceInstance();
+    const result = db.deleteRowById(id);
+    result
+        .then(data => res.json({ success: data }))
+        .catch(err => console.log(err));
+})
+
 
 app.listen(process.env.PORT, () => console.log("app server started"));

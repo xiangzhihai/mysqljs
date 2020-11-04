@@ -33,7 +33,7 @@ class DBService {
                         if (err) reject(new Error(err.message));
                         resolve(results);
                     })
-            });
+                });
             return response;
         } catch (error) {
             console.log(error);
@@ -50,15 +50,34 @@ class DBService {
                         if (err) reject(new Error(err.message));
                         resolve(result.insertId);
                     })
-            });
+                });
             return {
                 id: insertId,
                 name: name,
                 date_added: dateAdded,
             };
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
+    }
+
+    async deleteRowById(id) {
+        try {
+            id = parseInt(id, 10);
+            const response = await new Promise(
+                (resolve, reject) => {
+                    const query = "DELETE FROM names WHERE id = ?";
+                    connection.query(query, [id], (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result.affectedRows);
+                    })
+                });
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+
     }
 }
 

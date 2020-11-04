@@ -8,6 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const addBtn = document.querySelector("#add-name-btn");
 
+document.querySelector('table tbody').addEventListener("click", (event) => {
+    if (event.target.className === "delete-row-btn") {
+        deleteRowById(event.target.dataset.id);
+    } 
+});
+
+const deleteRowById = (id) => {
+    fetch("http://localhost:5000/delete/" + id, {
+        method: "DELETE"
+    }).then(res => res.json())
+    .then(data => {
+        if (data.success) location.reload();
+    });
+}
+
 addBtn.onclick = () => {
     const nameInput = document.querySelector("#name-input");
     const name = nameInput.value;
