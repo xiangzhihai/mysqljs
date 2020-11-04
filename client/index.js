@@ -113,3 +113,10 @@ const loadHTMLTable = (data) => {
 
     table.innerHTML = tableHTML;
 }
+
+document.querySelector("#search-btn").onclick = () => {
+    const searchValue = document.querySelector("#search-input").value;
+    fetch("http://localhost:5000/search/" + searchValue)
+        .then(res => res.json())
+        .then(data => loadHTMLTable(data['data']));
+}
