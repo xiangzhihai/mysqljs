@@ -11,7 +11,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // Create
 app.post("/insert", (req, res) => {
-
+    const { name } = req.body;
+    const db = dbService.getDBServiceInstance();
+    const result = db.insertNewName(name);
+    result.then(data => res.json({ data: data }))
+        .catch(err => console.log(err));
 })
 
 app.get("/getAll", (req, res) => {
